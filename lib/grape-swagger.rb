@@ -64,10 +64,30 @@ module Grape
                 routes.reject!{ |route, value| "/#{route}/".index(parse_path(@@mount_path, nil) << '/') == 0 }
               end
 
-              routes_array = routes.keys.map do |local_route|
-                  { :path => "#{parse_path(route.route_path.gsub('(.:format)', ''),route.route_version)}/#{local_route}#{@@hide_format ? '' : '.{format}'}" }
+              routes_array = routes.keys.inject([]) do |array, name|
+                routes[name].each do |route|
+                  notes = if route.route_notes && @@markdown
+                    Kramdown::Document.new(strip_heredoc(route.route_notes)).to_html
+                  else
+                    route.route_notes
+                  end
+                  http_codes = parse_http_codes route.route_http_codes
+                  operations = {
+                      :notes => notes,
+                      :summary => route.route_description || '',
+                      :nickname   => route.route_method + route.route_path.gsub(/[\/:\(\)\.]/,'-'),
+                      :httpMethod => route.route_method,
+                      :parameters => parse_header_params(route.route_headers) +
+                        parse_params(route.route_params, route.route_path, route.route_method)
+                  }
+                  operations.merge!({:errorResponses => http_codes}) unless http_codes.empty?
+                  array << {
+                    :path => parse_path(route.route_path, api_version),
+                    :operations => [operations]
+                  }
+                end
+                array
               end
-
               {
                 apiVersion: api_version,
                 swaggerVersion: "1.1",
@@ -111,6 +131,7 @@ module Grape
                 apis: routes_array
               }
             end
+
           end
 
 
