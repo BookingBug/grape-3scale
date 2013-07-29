@@ -14,8 +14,8 @@ require 'rake'
 require 'jeweler'
 Jeweler::Tasks.new do |gem|
   # gem is a Gem::Specification... see http://docs.rubygems.org/read/chapter/20 for more options
-  gem.name = "grape-swagger"
-  gem.homepage = "http://github.com/tim-vandecasteele/grape-swagger"
+  gem.name = "grape-3scale"
+  gem.homepage = "http://github.com/BookingBug/grape-3scale"
   gem.license = "MIT"
   gem.summary = %Q{Add swagger compliant documentation to your grape API}
   gem.description = %Q{A simple way to add proper auto generated documentation - that can be displayed with swagger - to your inline described grape API}

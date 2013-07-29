@@ -4,7 +4,7 @@
 # -*- encoding: utf-8 -*-
 
 Gem::Specification.new do |s|
-  s.name = "grape-swagger"
+  s.name = "grape-3scale"
   s.version = "0.6.0"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
@@ -28,16 +28,16 @@ Gem::Specification.new do |s|
     "README.markdown",
     "Rakefile",
     "VERSION",
-    "grape-swagger.gemspec",
-    "lib/grape-swagger.rb",
+    "grape-3scale.gemspec",
+    "lib/grape-3scale.rb",
     "spec/default_api_spec.rb",
-    "spec/grape-swagger_helper_spec.rb",
-    "spec/grape-swagger_spec.rb",
+    "spec/grape-3scale_helper_spec.rb",
+    "spec/grape-3scale_spec.rb",
     "spec/non_default_api_spec.rb",
     "spec/simple_mounted_api_spec.rb",
     "spec/spec_helper.rb"
   ]
-  s.homepage = "http://github.com/tim-vandecasteele/grape-swagger"
+  s.homepage = "http://github.com/tim-vandecasteele/grape-3scale"
   s.licenses = ["MIT"]
   s.require_paths = ["lib"]
   s.rubygems_version = "1.8.24"
