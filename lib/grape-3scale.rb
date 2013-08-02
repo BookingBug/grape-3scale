@@ -5,7 +5,7 @@ module Grape
     class << self
       attr_reader :combined_routes
 
-      def add_swagger_documentation(options={})
+      def add_3scale_documentation(options={})
         documentation_class = create_documentation_class
 
         documentation_class.setup({:target_class => self}.merge(options))
@@ -36,7 +36,7 @@ module Grape
           def self.setup(options)
             defaults = {
               :target_class => nil,
-              :mount_path => '/swagger_doc',
+              :mount_path => '/3scale_doc',
               :base_path => nil,
               :api_version => '0.1',
               :markdown => false,
@@ -54,7 +54,7 @@ module Grape
             api_version = options[:api_version]
             base_path = options[:base_path]
 
-            desc 'Swagger compatible API description'
+            desc '3scale compatible API description'
             get @@mount_path do
               header['Access-Control-Allow-Origin'] = '*'
               header['Access-Control-Request-Method'] = '*'
@@ -97,7 +97,7 @@ module Grape
               }
             end
 
-            desc 'Swagger compatible API description for specific API', :params =>
+            desc '3scale compatible API description for specific API', :params =>
               {
                 "name" => { :desc => "Resource name of mounted API", :type => "string", :required => true },
               }
