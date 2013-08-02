@@ -166,13 +166,15 @@ module Grape
                   dataType = 'String'
                   description = value.is_a?(Hash) ? value[:description] : ''
                   required = value.is_a?(Hash) ? !!value[:required] : false
+                  threescale_name = value.is_a?(Hash) ? value[:threescale_name] : ''
                   paramType = "header"
                   {
                     paramType: paramType,
                     name: param,
                     description: description,
                     dataType: dataType,
-                    required: required
+                    required: required,
+                    threescale_name: threescale_name
                   }
                 end
               else
