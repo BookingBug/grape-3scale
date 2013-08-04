@@ -46,6 +46,7 @@ You can pass a hash with some configuration possibilities to ```add_3scale_docum
 * ```:base_path``` Basepath of the API that's being exposed
 * ```:markdown``` Allow markdown in `notes`, default `false`
 * ```:hide_documentation_path``` Don't show the '/3scale_doc' path in the generated 3scale documentation
+* ```:default_params``` A hash of values for paramaters so save to repeatedly documenting the same parameters
 
 ## 3scale Header Parameters
 
@@ -66,6 +67,42 @@ desc "Return super-secret information", {
   }
 }
 ```
+
+## Passing in default values
+
+We found that to supply good descriptions to function paramaters for 3scale, we were adding the same comments in again and again. To apply a more DRY approach, we allowed the generator to have passed in a hash of default values for parameters. i.e
+
+``` ruby
+  default_params = {
+          "App-Id" => {
+            description: "Identifies application", required: true, threescale_name: 'app_ids', type: "String"
+          },
+          "App-Key" => {
+            description: "Authorizes application", required: true, threescale_name: 'app_keys', type: "String"
+          },
+          .....
+        }
+          
+  add_3scale_documentation :markdown => true, :hide_documentation_path => true, 
+                          :hide_format => true, :default_params=>default_params
+```
+
+This means that later you can simply specifiy a param name, and the description and other params are added from the hash. i.e.
+
+``` ruby
+    params do
+      requires "App-Id"
+      requires "App-Key"
+    end
+```
+
+
+You can override any of the parameters locally if needed, and the defaults only apply if not set
+
+
+
+    
+
 
 ## 3scale additions
 grape-3scale allows you to add an explanation in markdown in the notes field. Which would result in proper formatted markdown in Active Docs.
@@ -94,6 +131,14 @@ desc "Reserve a virgin in heaven", {
   NOTE
 }
 ```
+
+You can also make use of the extra 3scale params:
+
+* ```:threescale_name```  The options 3scame param name - useful for app-id and app-key
+* ```:default```  This passes in to 3scale as their param: ```:defaultValue```
+* ```:allowedValues```  A list of allowed values for a parameter
+
+Finally the gem also automatically uses the 3scale ```group``` variable to group opperations by their route name 
 
 ## Contributing to grape-3scale
 
